@@ -122,7 +122,7 @@ class DisplayService:
         
         if df_data:
             df = pd.DataFrame(df_data)
-            st.dataframe(df, use_container_width=True)
+            st.dataframe(df, width="stretch")
         else:
             st.info(MESSAGES["INFO_NO_FEATURES"])
     

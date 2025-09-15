@@ -925,7 +925,7 @@ class Molecule3DFeaturesService:
             'cis' if atoms are on the same side, 'trans' otherwise, nan if there is no chiral centers in the molecule.
         """
         if "@" not in self.smiles:
-            return np.nan
+            return "impossible to calculate"
         
         if len(set([self.X1, self.X2, self.R1, self.R2])) != 4:
             if self.f_group == "non-F":

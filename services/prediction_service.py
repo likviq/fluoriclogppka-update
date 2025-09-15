@@ -1,12 +1,12 @@
-"""Сервіс для виконання передбачень молекулярних властивостей"""
+from enum import Enum
 
 import streamlit as st
+
 import fluoriclogppka
 from constants import MESSAGES
 
 
 class PredictionService:
-    """Сервіс для виконання передбачень властивостей молекул"""
     
     def __init__(self):
         pass
@@ -47,7 +47,7 @@ class PredictionService:
                 'success': False
             }
     
-    def get_3d_features(self, smiles: str, target_value) -> dict:
+    def get_3d_features(self, smiles: str, target_value, convert_to_basic_type: bool = False) -> dict:
         """
         Gets 3D features of the molecule
         
@@ -66,7 +66,14 @@ class PredictionService:
                 target_value=target_value,
                 conformers_limit=None
             )
-            
+
+            if convert_to_basic_type:
+                for key, instance in service.features_3d_dict.items():
+                    if isinstance(instance, Enum):
+                        service.features_3d_dict[key] = instance.value
+                    if isinstance(instance, (int, float)):
+                        service.features_3d_dict[key] = str(instance)
+
             return service.features_3d_dict
         except Exception as e:
             st.error(MESSAGES["ERROR_3D_FEATURES"].format(error=str(e)))

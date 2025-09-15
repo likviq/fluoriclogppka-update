@@ -59,7 +59,7 @@ def main():
         # 3D features button
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            features_button = st.button("🧬 Calculate 3D Features", use_container_width=True)
+            features_button = st.button("🧬 Calculate 3D Features", width='stretch')
         
         if features_button:
             with st.spinner("Calculating 3D features..."):

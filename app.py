@@ -47,7 +47,8 @@ def main():
                 prediction = st.session_state['last_prediction']
                 features_3d = prediction_service.get_3d_features(
                     smiles=prediction['smiles'],
-                    target_value=prediction['parameters']["target_value"]
+                    target_value=prediction['parameters']["target_value"],
+                    convert_to_basic_type=True,
                 )
                 if features_3d:
                     st.session_state['last_prediction']['3d_features'] = features_3d
