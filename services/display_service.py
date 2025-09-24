@@ -8,7 +8,7 @@ from fluoriclogppka.ml_part.constants import Target
 from utils.molecule_utils import draw_molecule, get_molecule_properties
 from constants import (
     FEATURE_SECTIONS, FEATURE_NAMES, FLOAT_PRECISION, 
-    EXTENDED_PRECISION, MESSAGES
+    EXTENDED_PRECISION, MESSAGES, FEATURE_IMPORTANCE
 )
 
 
@@ -59,7 +59,7 @@ class DisplayService:
         with st.expander("Показати деталі"):
             st.json(prediction_data)
     
-    def display_3d_features(self, features_dict: dict):
+    def display_3d_features(self, features_dict: dict, target_value: str):
         """Відображає 3D характеристики молекули в зручному форматі"""
         if not features_dict:
             return
@@ -78,7 +78,7 @@ class DisplayService:
         
         # Детальна таблиця
         with st.expander("Детальна таблиця всіх характеристик"):
-            self._display_detailed_table(features_dict)
+            self._display_detailed_table(features_dict, target_value)
         
         # Кнопка завантаження
         st.download_button(
@@ -98,26 +98,29 @@ class DisplayService:
                 
                 if isinstance(value, (int, float)):
                     if section_key == "ANGLES":
-                        display_value = f"{value:.{FLOAT_PRECISION}f}°"
+                        display_value = round(value, FLOAT_PRECISION)
                     else:
-                        display_value = f"{value:.{FLOAT_PRECISION}f}" if isinstance(value, float) else str(value)
+                        display_value = round(value, FLOAT_PRECISION) if isinstance(value, float) else str(value)
                 else:
                     display_value = str(value)
                 
                 st.metric(display_name, display_value)
     
-    def _display_detailed_table(self, features_dict: dict):
+    def _display_detailed_table(self, features_dict: dict, target_value: str):
         """Відображує детальну таблицю характеристик"""
         df_data = []
         for key, value in features_dict.items():
             if value is not None:
                 display_name = FEATURE_NAMES.get(key, key)
-                formatted_value = value if not isinstance(value, float) else f"{value:.{EXTENDED_PRECISION}f}"
+                formatted_value = (
+                    f"{value:.{FLOAT_PRECISION}f}" if isinstance(value, float) else value
+                )
+                importance = f"{FEATURE_IMPORTANCE[target_value.value.lower()].get(key, key) * 100}%"
                 
                 df_data.append({
                     "Характеристика": display_name,
                     "Значення": formatted_value,
-                    "Тип": type(value).__name__
+                    "Важливість": importance,
                 })
         
         if df_data:

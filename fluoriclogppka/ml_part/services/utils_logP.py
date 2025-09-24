@@ -25,13 +25,19 @@ def calculate_identificator(mol) -> Identificator:
     NH_matches = mol.GetSubstructMatches(NH_submol)
     secondary_amine_matches = mol.GetSubstructMatches(secondary_amine_submol)
 
+    print(f"NH_matches: {NH_matches}")
+    print(f"COOH_matches: {COOH_matches}")
+    print(f"secondary_amine_matches: {secondary_amine_matches}")
+
+    atoms_not_to_visit = ring_matches[0] if len(ring_matches) > 0 else []
+
     furthest_atom_from_COOH, furthest_COOH_distance = find_the_furthest_atom(mol=mol,
                                                                              atom_id=COOH_matches[0][0],
-                                                                             atoms_not_to_visit=ring_matches[0])
+                                                                             atoms_not_to_visit=atoms_not_to_visit)
     
     furthest_atom_from_NH, furthest_NH_distance = find_the_furthest_atom(mol=mol,
                                                                          atom_id=NH_matches[0][0],
-                                                                         atoms_not_to_visit=ring_matches[0])
+                                                                         atoms_not_to_visit=atoms_not_to_visit)
     
     if furthest_NH_distance > furthest_COOH_distance:
         return Identificator.carboxilic_acid

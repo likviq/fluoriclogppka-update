@@ -54,7 +54,10 @@ def main():
                     st.session_state['last_prediction']['3d_features'] = features_3d
         
         if '3d_features' in st.session_state['last_prediction']:
-            display_service.display_3d_features(st.session_state['last_prediction']['3d_features'])
+            display_service.display_3d_features(
+                st.session_state['last_prediction']['3d_features'],
+                st.session_state['last_prediction']['parameters']['target_value']
+            )
 
 
 if __name__ == "__main__":

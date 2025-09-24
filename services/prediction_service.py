@@ -3,7 +3,7 @@ from enum import Enum
 import streamlit as st
 
 import fluoriclogppka
-from constants import MESSAGES
+from constants import MESSAGES, FLOAT_PRECISION
 
 
 class PredictionService:
@@ -72,7 +72,7 @@ class PredictionService:
                     if isinstance(instance, Enum):
                         service.features_3d_dict[key] = instance.value
                     if isinstance(instance, (int, float)):
-                        service.features_3d_dict[key] = str(instance)
+                        service.features_3d_dict[key] = str(round(instance, FLOAT_PRECISION))
 
             return service.features_3d_dict
         except Exception as e:

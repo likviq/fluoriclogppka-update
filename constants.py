@@ -87,6 +87,44 @@ FEATURE_NAMES = {
     "cis/trans": "Cis/Trans"
 }
 
+FEATURE_IMPORTANCE = {
+    "logp": {
+        "identificator": 0.1,
+        "dipole_moment": 0.1,
+        "mol_volume": 0.045, 
+        "mol_weight": 0.078,
+        "sasa": 0.1,
+        "tpsa+f": 0.1,
+        "angle_X1X2R2": 0.1,
+        "angle_X2X1R1": 0.1,
+        "angle_R2X2R1": 0.1,
+        "angle_R1X1R2": 0.1,
+        "dihedral_angle": 0.1,
+        "f_to_fg": 0.1,
+        "f_freedom": 0.1,
+        "distance_between_atoms_in_cycle_and_f_group": 0.1,
+        "distance_between_atoms_in_f_group_centers": 0.1,
+        "cis/trans": 0.1
+    },
+    "pka": {
+        "identificator": 0.1,
+        "dipole_moment": 0.1,
+        "mol_weight": 0.034,
+        "sasa": 0.1,
+        "tpsa+f": 0.1,
+        "angle_X1X2R2": 0.1,
+        "angle_X2X1R1": 0.1,
+        "angle_R2X2R1": 0.1,
+        "angle_R1X1R2": 0.1,
+        "dihedral_angle": 0.1,
+        "f_to_fg": 0.1,
+        "f_freedom": 0.1,
+        "distance_between_atoms_in_cycle_and_f_group": 0.1,
+        "distance_between_atoms_in_f_group_centers": 0.1,
+        "cis/trans": 0.1
+    }
+}
+
 # Value formatting
 FLOAT_PRECISION = 4
 EXTENDED_PRECISION = 6
