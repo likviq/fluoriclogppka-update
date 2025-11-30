@@ -54,9 +54,14 @@ def main():
                     st.session_state['last_prediction']['3d_features'] = features_3d
         
         if '3d_features' in st.session_state['last_prediction']:
+            save_file_name = "features.json"
+            if st.session_state['last_prediction'] and st.session_state['last_prediction']['smiles']:
+                save_file_name = f"{st.session_state['last_prediction']['smiles']}_features.json"
+            
             display_service.display_3d_features(
-                st.session_state['last_prediction']['3d_features'],
-                st.session_state['last_prediction']['parameters']['target_value']
+                features_dict=st.session_state['last_prediction']['3d_features'],
+                target_value=st.session_state['last_prediction']['parameters']['target_value'],
+                save_file_name=save_file_name
             )
 
 

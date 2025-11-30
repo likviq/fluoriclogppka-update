@@ -539,7 +539,9 @@ class MoleculeDihedralAngle(OptimizedMolecule):
         
         conf = mol.GetConformer(conf_id)
 
-        dihedral_angle_value = abs(rdMolTransforms.GetDihedralDeg(conf, iAtomId, jAtomId, kAtomId, lAtomId))
+        dihedral_angle_value = abs(rdMolTransforms.GetDihedralDeg(
+            conf=conf, iAtomId=iAtomId, jAtomId=jAtomId, kAtomId=kAtomId, lAtomId=lAtomId
+        ))
 
         return dihedral_angle_value
     

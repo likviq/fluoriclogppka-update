@@ -59,7 +59,7 @@ class DisplayService:
         with st.expander("Показати деталі"):
             st.json(prediction_data)
     
-    def display_3d_features(self, features_dict: dict, target_value: str):
+    def display_3d_features(self, features_dict: dict, target_value: str, save_file_name: str = "3d_features.json"):
         """Відображає 3D характеристики молекули в зручному форматі"""
         if not features_dict:
             return
@@ -85,7 +85,7 @@ class DisplayService:
             key="download_3d_features",
             label="📥 Завантажити 3D характеристики (JSON)",
             data=json.dumps(features_dict, ensure_ascii=False, indent=4, default=str),
-            file_name="3d_features.json",
+            file_name=save_file_name,
             mime="application/json"
         )
     
@@ -125,16 +125,15 @@ class DisplayService:
         
         if df_data:
             df = pd.DataFrame(df_data)
-            st.dataframe(df, width="stretch")
+            st.dataframe(df, use_container_width=True)
         else:
             st.info(MESSAGES["INFO_NO_FEATURES"])
     
     def display_parameters_section(self):
         """Displays prediction parameters section"""        
-        col_params1, col_params2 = st.columns(2)
-        
-        with col_params1:
-            st.markdown('<div class="info-card">', unsafe_allow_html=True)
+        info = st.container()
+
+        with info:
             target_options = {
                 "pKa": "pKa",
                 "logP": "logP"
@@ -144,6 +143,5 @@ class DisplayService:
                 options=list(target_options.keys()),
                 help="Select property for prediction"
             )
-            st.markdown('</div>', unsafe_allow_html=True)
         
         return target_value
